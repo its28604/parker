@@ -25,7 +25,7 @@ def getParkInfo(link):
         lab["labSpace"] = tree.xpath('//td[@id="labSpace"]/text()')[0]
         lab["labCharge"] = tree.xpath('//td[@id="labCharge"]/text()')[0].replace('收費方式：', '')
     except:
-        print(f"Error occure within parsing: {linkZ}")
+        print(f"Error occure within parsing: {link}")
     return lab
 
 
@@ -35,8 +35,8 @@ if __name__ == "__main__":
     import json
     import time
 
-    file_path = "all_parks_link.txt"
-    out_file_path = "all_parks_info.json"
+    file_path = f"{repo_path}/all_parks_link.txt"
+    out_file_path = f"{repo_path}/all_parks_info.json"
     labs = {}
     with open(out_file_path, 'r') as file:
         labs = json.load(file)

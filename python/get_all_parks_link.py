@@ -27,7 +27,7 @@ def GetAllParksLink():
             all_parks_link.append(_href)
 
     # Open a file in write mode
-    with open('all_parks_link.txt', 'w') as file:
+    with open(f"{repo_path}all_parks_link.txt", 'w') as file:
         for link in all_parks_link:
             file.write(link + '\n')  # Write each link to the file, followed by a newline
 
@@ -35,3 +35,4 @@ def GetAllParksLink():
 
 if __name__ == "__main__":
     GetAllParksLink()
+    

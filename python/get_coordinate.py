@@ -1,5 +1,6 @@
 import requests
 import json
+from parker_general import *
 
 class GoogleMapHelper:
     api_key = None
@@ -7,7 +8,7 @@ class GoogleMapHelper:
     @classmethod
     def getApiKey(cls):
         if cls.api_key is None:
-            with open("./auth/maps_api.key", 'r') as key_file:
+            with open(f"{repo_path}/auth/maps_api.key", 'r') as key_file:
                 cls.api_key = key_file.readline().rstrip()
         return cls.api_key
 
