@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Maps Multiple Markers</title>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"></script>
+    <style>
+        /* Additional styles can be added here */
+    </style>
+</head>
+<body>
+    <div id="map" style="height: 400px; width: 100%;"></div>
+    <script>
+        function initMap() {
+            var options = {
+                zoom: 8,
+                center: {lat: 37.7749, lng: -122.4194}
+            }
+
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            var coordinates = [
+                {lat: 37.7749, lng: -122.4194},
+                {lat: 40.7128, lng: -74.0060}
+                // Add more coordinates here
+            ];
+
+            for(var i = 0; i < coordinates.length; i++){
+                new google.maps.Marker({
+                    position: coordinates[i],
+                    map: map,
+                });
+            }
+        }
+    </script>
+</body>
+</html>
