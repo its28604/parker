@@ -17,7 +17,7 @@ def getParkInfo(link):
         lab["labParkName"] = tree.xpath('//th[@id="labParkName"]/text()')[0]
         lab["labTel"] = tree.xpath('//td[@id="labTel"]/text()')[0].replace('聯絡電話：', '')
         labAdd = lab["labAdd"] = tree.xpath('//td[@id="labAdd"]/text()')[0].replace('地址：', '')
-        labCoor = getCoordinate(labAdd)
+        labCoor = GoogleMapHelper.getCoordinate(labAdd)
         lab["labAdd"] = labAdd
         lab["labCoor"] = labCoor
         lab["labHours"] = tree.xpath('//td[@id="labHours"]/text()')[0].replace('營業時間：', '')
@@ -54,10 +54,11 @@ if __name__ == "__main__":
                     labs[id] = lab
                     count += 1
                     print(count)
-                    if count == 10:
+                    if count == 3:
                         break
                     time.sleep(5)
-            except:
+            except Exception as e:
+                print(e)
                 break
     
     with open(out_file_path, 'w') as out_file:
