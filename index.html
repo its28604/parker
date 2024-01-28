@@ -22,6 +22,7 @@
                         center: {lat: 25.0330, lng: 121.5654} // Center of Taipei
                     };
                     var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+                    const infoWindow = new google.maps.InfoWindow();
 
                     // Iterate over each entry in the JSON object
                     for (var key in data) {
@@ -33,7 +34,15 @@
                             new google.maps.Marker({
                                 position: latLng,
                                 map: map,
+                                optimized: false,
                                 title: data[key].labParkName // Use the parking lot name as marker title
+                            });
+
+                            // Add a click listener for each marker, and set up the info window.
+                            marker.addListener("click", () => {
+                            infoWindow.close();
+                            infoWindow.setContent(marker.getTitle());
+                            infoWindow.open(marker.getMap(), marker);
                             });
                         }
                     }
