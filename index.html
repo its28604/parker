@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html>
 <head>
-    <title>Google Maps Multiple Markers</title>
+    <title>Parking Lot Spaces</title>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAVCJ-3Av5zFjr-TCKuyB-Mwd4p3qgccG8&callback=initMap"></script>
     <style>
-        /* Additional styles can be added here */
+        #map {
+            height: 400px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
-    <div id="map" style="height: 400px; width: 100%;"></div>
+    <div id="map"></div>
     <script>
         function initMap() {
-            var options = {
-                zoom: 8,
-                center: {lat: 37.7749, lng: -122.4194}
-            }
+            fetch('all_parks_info.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Start with a default center
+                    var mapOptions = {
+                        zoom: 12,
+                        center: {lat: 25.0330, lng: 121.5654} // Center of Taipei
+                    };
+                    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-            var map = new google.maps.Map(document.getElementById('map'), options);
+                    // Iterate over each entry in the JSON object
+                    for (var key in data) {
+                        if (data.hasOwnProperty(key)) {
+                            var coor = data[key].labCoor.split(', '); // Split the 'labCoor' string into lat and lng
+                            var latLng = new google.maps.LatLng(parseFloat(coor[0]), parseFloat(coor[1]));
 
-            var coordinates = [
-                {lat: 37.7749, lng: -122.4194},
-                {lat: 40.7128, lng: -74.0060}
-                // Add more coordinates here
-            ];
-
-            for(var i = 0; i < coordinates.length; i++){
-                new google.maps.Marker({
-                    position: coordinates[i],
-                    map: map,
-                });
-            }
+                            // Add a marker for these coordinates
+                            new google.maps.Marker({
+                                position: latLng,
+                                map: map,
+                                title: data[key].labParkName // Use the parking lot name as marker title
+                            });
+                        }
+                    }
+                })
+                .catch(error => console.error('Error loading the JSON file:', error));
         }
     </script>
 </body>
 </html>
+    
